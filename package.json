@@ -5,7 +5,7 @@
   "description": "Understand the basic of Graphql",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node ./src/index",
+    "start": "nodemon ./src/index --ext js,graphql --exec babel-node ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
