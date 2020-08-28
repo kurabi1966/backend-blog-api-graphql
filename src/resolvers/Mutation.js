@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 const Mutation = {
+  // ============ Comment =================
   createComment(parent, args, { db }, info) {
     const userExist = db.users.some((user) => {
       return user.id === args.data.author;
@@ -34,6 +35,17 @@ const Mutation = {
     // return it
     return deletedComment[0];
   },
+  updateComment(parent, { id, data }, { db }, info) {
+    // check if the comment exist
+    const comment = db.comments.find((comment) => comment.id === id);
+    // if not throw an error
+    if (!comment) {
+      throw new Error('Comment not found');
+    }
+    // else update the comment and return the updateed version
+    return Object.assign(comment, data);
+  },
+  // ============ User ====================
   createUser(parent, args, { db }, info) {
     const emailTaken = db.users.some((user) => {
       return user.email === args.data.email;
@@ -81,6 +93,24 @@ const Mutation = {
     // return the deleted User
     return deletedUser[0];
   },
+  updateUser(parent, { id, data }, { db }, info) {
+    // check if the user exist
+    const user = db.users.find((user) => user.id === id);
+    // if not, throw an error
+    if (!user) {
+      throw new Error('User not found');
+    }
+    // check if the new email is taken
+    if (typeof data.email === 'string') {
+      const emailTaken = db.users.some((user) => user.email === data.email);
+      if (emailTaken) {
+        throw new Error('Email is used by other user');
+      }
+    }
+    // else update the user fields using the args.data and return the updated version
+    return Object.assign(user, data);
+  },
+  // ============ Post =====================
   createPost(parent, args, { db }, info) {
     const userExist = db.users.some((user) => {
       return user.id === args.data.author;
@@ -108,6 +138,16 @@ const Mutation = {
     });
     // return deleted post
     return deletedPost[0];
+  },
+  updatePost(parent, { id, data }, { db }, info) {
+    // check if the post exist
+    const post = db.posts.find((post) => post.id === id);
+    // if not throw an error
+    if (!post) {
+      throw new Error('Post not found');
+    }
+    // else update the post and return it
+    return Object.assign(post, data);
   },
 };
 
