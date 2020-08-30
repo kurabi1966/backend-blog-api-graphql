@@ -30,7 +30,7 @@ let posts = [
     id: 'a2a3f8b3-c399-4531-be09-ea722c11e5f8',
     title: 'GraphQL 201',
     body: 'This is an advanced GraphQL post...',
-    published: false,
+    published: true,
     author: '4f4b3e27-aa69-4500-a297-b80183195118',
   },
   {

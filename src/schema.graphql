@@ -16,6 +16,11 @@ type Mutation {
   updateComment(id: ID!, data: updateCommentInput!): Comment!
 }
 
+type Subscription {
+  comment(postId: ID!): CommentSubscriptionPayload!
+  post: PostSubscriptionPayload!
+}
+
 input createUserInput {
   name: String!
   email: String!
@@ -24,8 +29,8 @@ input createUserInput {
 
 input updateUserInput {
   age: Int
-  name: String!
-  email: String!
+  name: String
+  email: String
 }
 
 input createPostInput {
@@ -79,4 +84,14 @@ type Comment {
   date: Int!
   author: User!
   post: Post!
+}
+
+type CommentSubscriptionPayload {
+  mutation: String!
+  data: Comment!
+}
+
+type PostSubscriptionPayload {
+  mutation: String!
+  data: Post!
 }
